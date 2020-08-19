@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"
+    integrity="sha512-VZ6m0F78+yo3sbu48gElK4irv2dzPoep8oo9LEjxviigcnnnNvnTOJRSrIhuFk68FMLOpiNz+T77nNY89rnWDg=="
+    crossorigin="anonymous"></script>
+    <style>
+        body{
+            height: 100vh;
+            display: flex;
+            justify-content:center;
+            align-items:center;
+        }
+        input,button{
+            padding: 10px;
+            margin: 5px;
+        }
+
+    </style>
+<body>
+    <div style="display:flex;flex-direction:column; width:500px">
+        <input id="nome" type="text" placeholder="nome">
+        <input id="peso" type="text" placeholder="peso">
+        <input id="idade" type="text" placeholder="idade">
+        <input type="file" id="img" multiple>
+        <button>Enviar</button>
+    </div>
+
+    <script>
+        const textName = document.getElementById("nome");
+        const textPeso = document.getElementById("peso");
+        const textIdade = document.getElementById("idade");
+        const inputFile = document.getElementById("img");
+        const button = document.querySelector("button");
+
+        button.addEventListener('click', handleClick);
+
+        const options = {
+            headers: {
+                "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6MTAwMDUiLCJpYXQiOjE1OTc4NDg3MzMsIm5iZiI6MTU5Nzg0ODczMywiZXhwIjoxNTk3OTM1MTMzLCJkYXRhIjp7InVzZXIiOnsiaWQiOiIyIn19fQ.zrPPcyKAKivsQZxQpiY62r6jzc6VyvA93flMhXTylxU"
+            }
+        }
+
+        function handleClick() {
+            const files = inputFile.files;
+            const nome = textName.value;
+            const peso = textPeso.value;
+            const idade = textIdade.value;
+            const form = new FormData();
+
+            for (let i = 0; i < files.length; i++) {
+                form.append('img', files[i]);
+            }
+            console.log(form);
+            form.append("nome", nome);
+            form.append("peso", peso);
+            form.append("idade", idade);
+
+            axios.post("http://localhost:10005/json/api/photo", form, options);
+        }
+
+    </script>
+
+</body>
+
+</html>

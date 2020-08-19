@@ -11,11 +11,11 @@ function api_photo_post($request){
     }
 
     $nome = sanitize_text_field($request['nome']);
-    $pai = sanitize_text_field($request['pai']);
-    $filho = sanitize_text_field($request['filho']);
+    $peso = sanitize_text_field($request['peso']);
+    $idade = sanitize_text_field($request['idade']);
     $files = $request->get_file_params();
 
-    if(empty($nome) || empty($pai) || empty($filho) || empty($files)){
+    if(empty($nome) || empty($peso) || empty($idade) || empty($files)){
         $response = new WP_Error('error', 'Dados incompletos', ['status' => 422]);
         return rest_ensure_response($response);
     }
@@ -28,8 +28,8 @@ function api_photo_post($request){
         'post_content' => $nome,
         'files' => $files,
         'meta_input' => [
-            'pai' => $pai,
-            'filho' => $filho,
+            'peso' => $peso,
+            'idade' => $idade,
             'acessos' => 0,
         ],
     ];

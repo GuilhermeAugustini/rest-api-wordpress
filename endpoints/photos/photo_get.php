@@ -12,8 +12,8 @@ function photo_data($post){
         'title' => $post->post_title,
         'date' => $post->post_date,
         'src' => $src,
-        'pai'=> $post_meta['pai'][0],
-        'filho'=> $post_meta['filho'][0],
+        'peso'=> $post_meta['peso'][0],
+        'idade'=> $post_meta['idade'][0],
         'acessos'=> $post_meta['acessos'][0],
         'total_comments' => $total_comments,
     ];
