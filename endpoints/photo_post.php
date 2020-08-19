@@ -10,9 +10,9 @@ function api_photo_post($request){
         return rest_ensure_response($response);
     }
 
-    $nome = saniite_text_field($request['nome']);
-    $pai = saniite_text_field($request['pai']);
-    $filho = saniite_text_field($request['filho']);
+    $nome = sanitize_text_field($request['nome']);
+    $pai = sanitize_text_field($request['pai']);
+    $filho = sanitize_text_field($request['filho']);
     $files = $request->get_file_params();
 
     if(empty($nome) || empty($pai) || empty($filho) || empty($files)){
@@ -22,13 +22,14 @@ function api_photo_post($request){
 
     $response = [
         'post_author' => $user_id,
-        'post-type' => 'post',
+        'post_type' => 'post',
         'post_status' => 'publish',
-        'post-title' => $nome,
+        'post_title' => $nome,
         'post_content' => $nome,
+        'files' => $files,
         'meta_input' => [
-            'pai' => $peso,
-            'filho' => $idade,
+            'pai' => $pai,
+            'filho' => $filho,
             'acessos' => 0,
         ],
     ];
@@ -40,7 +41,7 @@ function api_photo_post($request){
     require_once ABSPATH . 'wp-admin/includes/media.php';
 
     $photo_id = media_handle_upload( 'img', $post_id);
-    update_post_meta($post_id , 'img', '$photo_id'); 
+    update_post_meta($post_id , 'img', $photo_id); 
 
     return rest_ensure_response($response);
 }
